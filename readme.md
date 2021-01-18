@@ -1,8 +1,3 @@
-# gojsondb
---
-    import "."
-
-
 ## Usage
 
 #### type DataNotExistsError
