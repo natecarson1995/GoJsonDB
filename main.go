@@ -40,7 +40,7 @@ func (db *JsonDB) GetRaw(key string) ([]byte, error) {
 	return nil, &DataNotExistsError{}
 }
 // Get unmarshals the data associated with the key into the interface pointer
-func (db *JsonDB) Get(key string, item *interface{}) error {
+func (db *JsonDB) Get(key string, item interface{}) error {
 	result, err := db.GetRaw(key)
 	if err != nil {
 		return err
