@@ -58,6 +58,20 @@ func (db *JsonDB) GetString(key string) (string, error) {
 	return string(result), nil
 }
 
+// Delete deletes a key and its associated data
+func (db *JsonDB) Delete(key string) {
+	delete(db.Data, key)
+}
+
+// ListKeys lists all of the keys in the map of data
+func (db *JsonDB) ListKeys() []string {
+	var result []string
+	for key := range db.Data {
+		result = append(result, key)
+	}
+	return result
+}
+
 // SetRaw sets the data associated with a key
 func (db *JsonDB) SetRaw(key string, data []byte) error {
 	db.Data[key] = data
@@ -77,7 +91,7 @@ func (db *JsonDB) SetString(key string, item string) error {
 	return db.SetRaw(key, []byte(item))
 }
 
-// Save save's the contents of the database to its corresponding filepath
+// Save saves the contents of the database to its corresponding filepath
 func (db *JsonDB) Save() error {
 	data, err := json.Marshal(db)
 	if err != nil {

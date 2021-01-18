@@ -27,3 +27,16 @@ func TestGetSet(t *testing.T) {
 		t.Fatal("Testing of data get set failed")
 	}
 }
+
+func TestListKeys(t *testing.T) {
+	db, err := New("test.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	db.SetString("item", "test test")
+	keys := db.ListKeys()
+	if keys[0] != "item" {
+		t.Fatal("Testing of listkeys failed")
+	}
+}
