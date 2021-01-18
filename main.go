@@ -64,7 +64,7 @@ func (db *JsonDB) SetRaw(key string, data []byte) error {
 	return db.Save()
 }
 // Set unmarshals an interface pointer into the data associated with a key
-func (db *JsonDB) Set(key string, item *interface{}) error {
+func (db *JsonDB) Set(key string, item interface{}) error {
 	result, err := json.Marshal(item)
 	if err != nil {
 		return err
