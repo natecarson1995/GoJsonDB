@@ -59,8 +59,9 @@ func (db *JsonDB) GetString(key string) (string, error) {
 }
 
 // Delete deletes a key and its associated data
-func (db *JsonDB) Delete(key string) {
+func (db *JsonDB) Delete(key string) error {
 	delete(db.Data, key)
+	return db.Save()
 }
 
 // ListKeys lists all of the keys in the map of data

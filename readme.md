@@ -37,7 +37,7 @@ file exists
 #### func (*JsonDB) Delete
 
 ```go
-func (db *JsonDB) Delete(key string)
+func (db *JsonDB) Delete(key string) error
 ```
 Delete deletes a key and its associated data
 
