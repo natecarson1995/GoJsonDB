@@ -59,8 +59,9 @@ func (db *JsonDB) GetString(key string) (string, error) {
 }
 
 // SetRaw sets the data associated with a key
-func (db *JsonDB) SetRaw(key string, data []byte) {
+func (db *JsonDB) SetRaw(key string, data []byte) error {
 	db.Data[key] = data
+	return db.Save()
 }
 // Set unmarshals an interface pointer into the data associated with a key
 func (db *JsonDB) Set(key string, item *interface{}) error {
@@ -69,12 +70,21 @@ func (db *JsonDB) Set(key string, item *interface{}) error {
 		return err
 	}
 
-	db.SetRaw(key, result)
-	return nil
+	return db.SetRaw(key, result)
 }
 // SetString sets a string associated with a key
-func (db *JsonDB) SetString(key string, item string) {
-	db.SetRaw(key, []byte(item))
+func (db *JsonDB) SetString(key string, item string) error {
+	return db.SetRaw(key, []byte(item))
+}
+
+// Save save's the contents of the database to its corresponding filepath
+func (db *JsonDB) Save() error {
+	data, err := json.Marshal(db)
+	if err != nil {
+		return err
+	}
+
+	return ioutil.WriteFile(db.Filename, data, os.ModePerm)
 }
 
 func fileExists(filename string) bool {
