@@ -34,6 +34,13 @@ func New(filename string) (*JsonDB, error)
 New creates a new JsonDB at the specified filename, loading the contents if the
 file exists
 
+#### func (*JsonDB) Delete
+
+```go
+func (db *JsonDB) Delete(key string)
+```
+Delete deletes a key and its associated data
+
 #### func (*JsonDB) Get
 
 ```go
@@ -55,12 +62,19 @@ func (db *JsonDB) GetString(key string) (string, error)
 ```
 GetString returns the string associated with the key
 
+#### func (*JsonDB) ListKeys
+
+```go
+func (db *JsonDB) ListKeys() []string
+```
+ListKeys lists all of the keys in the map of data
+
 #### func (*JsonDB) Save
 
 ```go
 func (db *JsonDB) Save() error
 ```
-Save save's the contents of the database to its corresponding filepath
+Save saves the contents of the database to its corresponding filepath
 
 #### func (*JsonDB) Set
 
