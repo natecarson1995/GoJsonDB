@@ -10,11 +10,12 @@ import (
 type JsonDB struct {
 	Filename string `json:"filename"`
 	Data map[string][]byte `json:"data"`
+	saving bool
 }
 
 // New creates a new JsonDB at the specified filename, loading the contents if the file exists
 func New(filename string) (*JsonDB, error) {
-	result := JsonDB{Filename: filename, Data: make(map[string][]byte)}
+	result := JsonDB{Filename: filename, Data: make(map[string][]byte), saving: false}
 
 	if fileExists(filename) {
 		dat, err := ioutil.ReadFile(filename)
@@ -94,6 +95,15 @@ func (db *JsonDB) SetString(key string, item string) error {
 
 // Save saves the contents of the database to its corresponding filepath
 func (db *JsonDB) Save() error {
+	if db.saving {
+		return nil
+	}
+
+	db.saving=true
+	defer func() {
+		db.saving=false
+	}()
+
 	data, err := json.Marshal(db)
 	if err != nil {
 		return err
