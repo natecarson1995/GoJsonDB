@@ -62,7 +62,7 @@ func (db *JsonDB) GetString(key string) (string, error) {
 // Delete deletes a key and its associated data
 func (db *JsonDB) Delete(key string) error {
 	delete(db.Data, key)
-	return db.Save()
+	return db.save()
 }
 
 // ListKeys lists all of the keys in the map of data
@@ -77,7 +77,7 @@ func (db *JsonDB) ListKeys() []string {
 // SetRaw sets the data associated with a key
 func (db *JsonDB) SetRaw(key string, data []byte) error {
 	db.Data[key] = data
-	return db.Save()
+	return db.save()
 }
 // Set unmarshals an interface pointer into the data associated with a key
 func (db *JsonDB) Set(key string, item interface{}) error {
@@ -93,8 +93,7 @@ func (db *JsonDB) SetString(key string, item string) error {
 	return db.SetRaw(key, []byte(item))
 }
 
-// Save saves the contents of the database to its corresponding filepath
-func (db *JsonDB) Save() error {
+func (db *JsonDB) save() error {
 	if db.saving {
 		return nil
 	}
